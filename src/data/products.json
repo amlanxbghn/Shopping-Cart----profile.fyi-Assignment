@@ -28,14 +28,14 @@
         "image": "/images/yellowPolo.jpg"
     },
     {
-        "id": 4,
+        "id": 5,
         "name": "Black Polo T-Shirt",
         "price": 499.99,
         "description": "High Quality Black Polo T-Shirt",
         "image": "/images/blackPolo.jpg"
     },
     {
-        "id": 4,
+        "id": 6,
         "name": "White Polo T-Shirt",
         "price": 699.99,
         "description": "High Quality White Polo T-Shirt",
