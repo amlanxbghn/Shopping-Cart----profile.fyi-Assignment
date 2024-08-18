@@ -3,17 +3,27 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '../context/CartContext';
+import { useState } from 'react';
 
 const ProductCard = ({ id, name, price, description, image }) => {
   // Access cart state and addToCart function from CartContext
   const { addToCart, cart } = useCart();
+  
+  // State to manage success message display
+  const [successMessage, setSuccessMessage] = useState('');
 
   // Check if the current product is already in the cart
   const isInCart = cart.some(item => item.id === id);
 
   // Function to handle adding the product to the cart
   const handleAddToCart = () => {
-    addToCart(id);
+    addToCart(id); // Add the product to the cart
+    setSuccessMessage('Added to cart successfully!'); // Set success message
+    
+    // Clear success message after a few seconds
+    setTimeout(() => {
+      setSuccessMessage('');
+    }, 3000);
   };
 
   return (
@@ -32,6 +42,13 @@ const ProductCard = ({ id, name, price, description, image }) => {
       <p className="text-gray-600 mb-2">{description}</p>
       {/* Product price */}
       <p className="text-lg font-bold mb-4">${price.toFixed(2)}</p>
+
+      {/* Display success message when item is added to the cart */}
+      {successMessage && (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" role="alert">
+          <span className="block sm:inline">{successMessage}</span>
+        </div>
+      )}
       {/* Conditional rendering based on whether the product is in the cart */}
       {!isInCart ? (
         // Button to add product to cart if not already in the cart
