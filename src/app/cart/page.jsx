@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import productsData from '../../data/products.json';
 import { useCart } from '../../context/CartContext';
+import CartItem from '../../components/CartItem';
 
 export default function Cart() {
   const { cart, updateQuantity, removeItem } = useCart();
@@ -33,7 +33,6 @@ export default function Cart() {
 
   const handleCheckout = () => {
     setCheckoutMessage('Checkout successful! Thank you for your purchase.');
-      //redirection to order confirmation page
   };
 
   const subtotal = calculateSubtotal();
@@ -56,34 +55,13 @@ export default function Cart() {
               const product = productsData.find((p) => p.id === item.id);
               if (!product) return null;
               return (
-                <div key={item.id} className="flex items-center border-b border-gray-200 py-4">
-                  <Image src={product.image} alt={product.name} width={80} height={80} className="object-cover mr-4" />
-                  <div className="flex-grow">
-                    <h3 className="text-lg font-semibold">{product.name}</h3>
-                    <p className="text-gray-600">${product.price.toFixed(2)}</p>
-                    <div className="flex items-center mt-2">
-                      <button
-                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                        className="bg-gray-200 px-2 py-1 rounded"
-                      >
-                        -
-                      </button>
-                      <span className="mx-2">{item.quantity}</span>
-                      <button
-                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                        className="bg-gray-200 px-2 py-1 rounded"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => removeItem(item.id)}
-                    className="text-red-500 hover:text-red-600 transition-colors"
-                  >
-                    Remove
-                  </button>
-                </div>
+                <CartItem
+                  key={item.id}
+                  item={item}
+                  product={product}
+                  updateQuantity={updateQuantity}
+                  removeItem={removeItem}
+                />
               );
             })}
           </div>
