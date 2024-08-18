@@ -1,35 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
 import productsData from '../data/products.json';
+import { useCart } from '../context/CartContext';
 
 export default function Home() {
-  const [cart, setCart] = useState([]);
-
-  useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }, [cart]);
-
-  const addToCart = (productId) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === productId);
-      if (existingItem) {
-        return prevCart.map((item) =>
-          item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      } else {
-        return [...prevCart, { id: productId, quantity: 1 }];
-      }
-    });
-  };
+  const { addToCart } = useCart();
 
   return (
     <main className="container mx-auto px-4 py-8">
