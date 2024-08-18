@@ -9,6 +9,7 @@ import { useCart } from '../../context/CartContext';
 export default function Cart() {
   const { cart, updateQuantity, removeItem } = useCart();
   const [discount, setDiscount] = useState(0);
+  const [checkoutMessage, setCheckoutMessage] = useState('');
 
   const calculateSubtotal = () => {
     return cart.reduce((total, item) => {
@@ -30,14 +31,24 @@ export default function Cart() {
     }
   };
 
+  const handleCheckout = () => {
+    setCheckoutMessage('Checkout successful! Thank you for your purchase.');
+      //redirection to order confirmation page
+  };
+
   const subtotal = calculateSubtotal();
   const total = subtotal - discount;
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
+      {checkoutMessage && (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+          <span className="block sm:inline">{checkoutMessage}</span>
+        </div>
+      )}
       {cart.length === 0 ? (
-        <p>Your Cart is Empty. <Link href="/" className="text-blue-500 hover:underline">Start Shopping</Link></p>
+        <p>Your cart is empty. <Link href="/" className="text-blue-500 hover:underline">Go shopping</Link></p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
@@ -97,10 +108,10 @@ export default function Cart() {
                 </button>
               </form>
               <button
-                onClick={() => alert('Checkout functionality not implemented')}
+                onClick={handleCheckout}
                 className="w-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors mt-4"
               >
-                Proceed to Checkout
+                Checkout
               </button>
             </div>
           </div>
