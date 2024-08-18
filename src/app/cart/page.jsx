@@ -34,7 +34,7 @@ export default function Cart() {
       setDiscount(20);
     } else {
       setDiscount(0);
-      alert('Invalid discount code');
+      alert('Invalid discount code. Apply "SAVE10" or "SAVE20" instead.');
     }
   };
 
